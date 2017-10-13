@@ -4,6 +4,32 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Not released][Not released]
 
+## [1.7.2][2017-10-11]
+
+### Fixed
+- Fixed `Konva.document is undefined`
+
+## [1.7.1][2017-10-11]
+
+### Changed
+- Konva for browser env and Konva for nodejs env are separate packages now. You can use `konva-node` for NodeJS env.
+
+## [1.7.0][2017-10-08]
+
+### Fixed
+- Several typescript fixes
+
+### Changed
+- Default value for `dragDistance` is changed to 3px.
+- Fix rare error throw on drag
+- Caching with height = 0 or width = 0 with throw async error. Caching will be ignored.
+
+## [1.6.8][2017-08-19]
+
+### Changed
+- The `node.getClientRect()` calculation is changed a bit. It is more powerfull and correct. Also it takes parent transform into account. See docs.
+- Upgrade nodejs deps
+
 ## [1.6.7][2017-07-28]
 
 ### Fixed

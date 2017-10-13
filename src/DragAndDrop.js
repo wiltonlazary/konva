@@ -17,11 +17,17 @@
 
     // methods
     _drag: function(evt) {
-      var dd = Konva.DD, node = dd.node;
-
+      var dd = Konva.DD,
+        node = dd.node;
       if (node) {
         if (!dd.isDragging) {
           var pos = node.getStage().getPointerPosition();
+          // it is possible that pos is undefined
+          // reattach it
+          if (!pos) {
+            node.getStage()._setPointerPosition(evt);
+            pos = node.getStage().getPointerPosition();
+          }
           var dragDistance = node.dragDistance();
           var distance = Math.max(
             Math.abs(pos.x - dd.startPointerPos.x),
@@ -60,7 +66,9 @@
       }
     },
     _endDragBefore: function(evt) {
-      var dd = Konva.DD, node = dd.node, layer;
+      var dd = Konva.DD,
+        node = dd.node,
+        layer;
 
       if (node) {
         layer = node.getLayer();
@@ -167,7 +175,8 @@
      * @memberof Konva.Node.prototype
      */
   Konva.Node.prototype.stopDrag = function() {
-    var dd = Konva.DD, evt = {};
+    var dd = Konva.DD,
+      evt = {};
     dd._endDragBefore(evt);
     dd._endDragAfter(evt);
   };
@@ -305,13 +314,15 @@
      * node.draggable(false);
      */
 
-  var html = Konva.document.documentElement;
-  html.addEventListener('mouseup', Konva.DD._endDragBefore, true);
-  html.addEventListener('touchend', Konva.DD._endDragBefore, true);
+  if (Konva.isBrowser) {
+    var html = Konva.document.documentElement;
+    html.addEventListener('mouseup', Konva.DD._endDragBefore, true);
+    html.addEventListener('touchend', Konva.DD._endDragBefore, true);
 
-  html.addEventListener('mousemove', Konva.DD._drag);
-  html.addEventListener('touchmove', Konva.DD._drag);
+    html.addEventListener('mousemove', Konva.DD._drag);
+    html.addEventListener('touchmove', Konva.DD._drag);
 
-  html.addEventListener('mouseup', Konva.DD._endDragAfter, false);
-  html.addEventListener('touchend', Konva.DD._endDragAfter, false);
+    html.addEventListener('mouseup', Konva.DD._endDragAfter, false);
+    html.addEventListener('touchend', Konva.DD._endDragAfter, false);
+  }
 })();

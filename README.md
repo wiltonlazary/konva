@@ -1,13 +1,13 @@
 ![Konva logo](https://raw.githubusercontent.com/konvajs/konvajs.github.io/master/apple-touch-icon-180x180.png)
 
-#Konva
+# Konva
 
 Konva is an HTML5 Canvas JavaScript framework that enables high performance animations, transitions, node nesting, layering, filtering, caching, event handling for desktop and mobile applications, and much more.
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/konvajs/konva?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 [![npm version](https://badge.fury.io/js/konva.svg)](http://badge.fury.io/js/konva) [![bower version](https://badge.fury.io/bo/konva.svg)](http://badge.fury.io/bo/konva)
-[![Build Status](https://travis-ci.org/konvajs/konva.png)](https://travis-ci.org/konvajs/konva)  [![Code Climate](https://codeclimate.com/github/konvajs/konva/badges/gpa.svg)](https://codeclimate.com/github/konvajs/konva)
+[![Build Status](https://travis-ci.org/konvajs/konva.png)](https://travis-ci.org/konvajs/konva)  [![Code Climate](https://codeclimate.com/github/konvajs/konva/badges/gpa.svg)](https://codeclimate.com/github/konvajs/konva) [![CDNJS version](https://img.shields.io/cdnjs/v/konva.svg)](https://cdnjs.com/libraries/konva)
 
 You can draw things onto the stage, add event listeners to them, move them, scale them, and rotate them independently from other shapes to support high performance animations, even if your application uses thousands of shapes. Served hot with a side of awesomeness.
 
@@ -20,7 +20,7 @@ This repository began as a GitHub fork of [ericdrowell/KineticJS](https://github
 # Quick Look
 
 ```html
-<script src="https://cdn.rawgit.com/konvajs/konva/1.6.7/konva.min.js"></script>
+<script src="https://cdn.rawgit.com/konvajs/konva/1.7.2/konva.min.js"></script>
 <div id="container"></div>
 <script>
     var stage = new Konva.Stage({
@@ -65,10 +65,10 @@ Konva supports UMD loading. So you can use all possible variants to load the fra
 ### 1 Load Konva via classical `<script>` tag:
 
 ```html
-<script src="https://cdn.rawgit.com/konvajs/konva/1.6.7/konva.min.js"></script>
+<script src="https://cdn.rawgit.com/konvajs/konva/1.7.2/konva.min.js"></script>
 ```
 
-You can use CDN: [https://cdn.rawgit.com/konvajs/konva/1.6.7/konva.min.js](https://cdn.rawgit.com/konvajs/konva/1.6.7/konva.min.js)
+You can use CDN: [https://cdn.rawgit.com/konvajs/konva/1.7.2/konva.min.js](https://cdn.rawgit.com/konvajs/konva/1.7.2/konva.min.js)
 
 ### 2 Load via AMD (requirejs):
 
@@ -113,18 +113,20 @@ import 'konva/src/shapes/rect';
 
 ### 5 NodeJS
 
-You have to install some deps manually to use Konva in nodejs env.
-
 We are using [node-canvas](https://github.com/Automattic/node-canvas) to create canvas element.
+Please check installation instructions for it. Then just run
 
-1. Install node-canvas dependencies [https://github.com/Automattic/node-canvas](https://github.com/Automattic/node-canvas)
-2. `npm install canvas --save`
-2. `npm install jsdom --save`
-3. `npm install konva --save`
+```bash
+npm install konva-node
+```
+
+Then in you javascript file you will need to use
+
+```javascript
+const Konva = require('konva-node');
+```
 
 See file `resources/nodejs-demo.js` for example.
-
-Last tested with node@5.10.1, canvas@1.3.14, jsdom@8.5.0
 
 # Change log
 

@@ -28,7 +28,7 @@
  */
 
 // runtime check for already included Konva
-(function(global) {
+(function() {
   'use strict';
   /**
      * @namespace Konva
@@ -49,6 +49,10 @@
     listenClickTap: false,
     inDblClickWindow: false,
 
+    isBrowser:
+      typeof window !== 'undefined' &&
+      {}.toString.call(window) === '[object Window]',
+
     // configurations
     enableTrace: false,
     traceArrMax: 100,
@@ -65,14 +69,14 @@
     pixelRatio: undefined,
     /**
          * Drag distance property. If you start to drag a node you may want to wait until pointer is moved to some distance from start point,
-         * only then start dragging.
+         * only then start dragging. Default is 3px.
          * @property dragDistance
          * @default 0
          * @memberof Konva
          * @example
          * Konva.dragDistance = 10;
          */
-    dragDistance: 0,
+    dragDistance: 3,
     /**
          * Use degree values for angle properties. You may set this property to false if you want to use radiant values.
          * @property angleDeg
@@ -196,12 +200,14 @@
     _parseUA: function(userAgent) {
       var ua = userAgent.toLowerCase(),
         // jQuery UA regex
-        match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
-        /(webkit)[ \/]([\w.]+)/.exec(ua) ||
-        /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
-        /(msie) ([\w.]+)/.exec(ua) ||
-        (ua.indexOf('compatible') < 0 &&
-          /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua)) || [],
+        match =
+          /(chrome)[ /]([\w.]+)/.exec(ua) ||
+          /(webkit)[ /]([\w.]+)/.exec(ua) ||
+          /(opera)(?:.*version|)[ /]([\w.]+)/.exec(ua) ||
+          /(msie) ([\w.]+)/.exec(ua) ||
+          (ua.indexOf('compatible') < 0 &&
+            /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua)) ||
+          [],
         // adding mobile flag as well
         mobile = !!userAgent.match(
           /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i
@@ -221,9 +227,10 @@
     UA: undefined
   };
 
-  var glob = typeof global !== 'undefined'
-    ? global
-    : typeof window !== 'undefined'
+  var glob =
+    typeof global !== 'undefined'
+      ? global
+      : typeof window !== 'undefined'
         ? window
         : typeof WorkerGlobalScope !== 'undefined' ? self : {};
 
@@ -238,34 +245,15 @@
   glob.Konva = Konva;
   Konva.global = glob;
 
-  if (typeof exports === 'object') {
-    // runtime-check for browserify and nw.js (node-webkit)
-    if (glob.window && glob.window.document) {
-      Konva.document = glob.window.document;
-      Konva.window = glob.window;
-    } else {
-      // Node. Does not work with strict CommonJS, but
-      // only CommonJS-like enviroments that support module.exports,
-      // like Node.
-      var Canvas = require('canvas');
-      var JSDOM = require('jsdom').JSDOM;
+  Konva.document = document;
+  Konva.window = window;
 
-      Konva.window = new JSDOM(
-        '<!DOCTYPE html><html><head></head><body></body></html>'
-      ).window;
-      Konva.document = Konva.window.document;
-      Konva.window.Image = Canvas.Image;
-      Konva._nodeCanvas = Canvas;
-      Konva.isNode = true;
-    }
+  if (typeof exports === 'object') {
     module.exports = Konva;
-    return;
   } else if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(function() {
       return Konva;
     });
   }
-  Konva.document = document;
-  Konva.window = window;
-})(typeof global !== 'undefined' ? global : window);
+})();
